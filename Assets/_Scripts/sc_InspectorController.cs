@@ -39,7 +39,6 @@ public class sc_InspectorController : MonoBehaviour
             go_btnRestart.SetActive(false);
             go_btnContinue.SetActive(true);
             Debug.Log("Correcto");
-            scriptgeneral.i_Step = 2;
             StartCoroutine(fGoStage());
         }
         else
@@ -66,9 +65,9 @@ public class sc_InspectorController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(scriptgeneral.i_Step == 1)
+        if(scriptgeneral.i_Step == 0)
         {
-            scriptgeneral.fNextStep(scriptgeneral.i_Step);
+            scriptgeneral.fNextStep(1);
             nm.SetDestination(transform.position);
             StartCoroutine(foptions());
         }
@@ -88,7 +87,7 @@ public class sc_InspectorController : MonoBehaviour
         nm.enabled = false;
         yield return new WaitForSeconds(2);
         fPositionUser(posUser.transform.position, posUser.transform.eulerAngles);
-        scriptgeneral.fNextStep(scriptgeneral.i_Step);
+        scriptgeneral.fNextStep(2);
     }
 
     private void fPositionUser(Vector3 vPosition, Vector3 vAngles)
