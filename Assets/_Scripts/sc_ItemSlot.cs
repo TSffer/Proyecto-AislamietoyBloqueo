@@ -10,9 +10,18 @@ public class sc_ItemSlot : MonoBehaviour, IDropHandler
     {
         if(eventData.pointerDrag != null)
         {
-            eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-            Debug.Log("ItemSlot");
-            scriptgeneralact.fProcessAyB(4, "");
+            if(scriptgeneralact.i_Step == 4)
+            {
+                eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+                Debug.Log("ItemSlot 1");
+                scriptgeneralact.fProcessAyB(4, "");
+            }
+            else if(scriptgeneralact.i_Step == 5)
+            {
+                eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+                Debug.Log("ItemSlot 2");
+                scriptgeneralact.fProcessAyB(5, "");
+            }
         }
     }
 }

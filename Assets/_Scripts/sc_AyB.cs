@@ -10,7 +10,7 @@ public class sc_AyB : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!click)
+        if (!click && !sc_general.bFinish)
         {
             transform.Rotate(90.0f, 0.0f, 0.0f);
             sc_general.tablet_[0].goCanvasStateAyB.GetComponentInChildren<Image>().fillAmount += 0.25f;

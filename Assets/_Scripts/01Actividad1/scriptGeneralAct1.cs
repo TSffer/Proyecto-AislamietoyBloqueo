@@ -21,8 +21,10 @@ public class scriptGeneralAct1 : MonoBehaviour
         public GameObject goImageCorrect;
         public GameObject goImageIncorrect;
         public GameObject goCanvasStateAyB;
+        public GameObject goCanvasBackpack;
         public Text txtTitle;
         public Text txtInfo;
+        public VideoPlayer videoplayer;
     }
     [Serializable]
     public class Desarrollo
@@ -32,34 +34,41 @@ public class scriptGeneralAct1 : MonoBehaviour
         public GameObject posGuia;
         public GameObject goPanel;
     }
-  
+    [Serializable]
+    public class LockoutTagout
+    {
+        public GameObject goEquipment;
+        public GameObject goTagout;
+        public GameObject[] goElements;
+    }
+
+
     public menuWorkshopController menuworkshopcontroller;
 
-    public Tablet[] tablet_;
-    
-    public AudioSource audioSource;
+    public enum enum_StepLT {Welcome, RequestPermission, IdentifyEquipment, Isolation, Lockout, Tagout, StoredEnergyCheck};
+    public enum enum_IDEquipment {E01, E02, E03, E04, E05};
 
+    public enum_StepLT enum_StepCurrent;
+    public enum_IDEquipment enum_IDCurrent;
+
+    public Tablet[] tablet_;
+    public LockoutTagout[] lockouttagout;
+    public GameObject[] goSlotsLockoutTagout;
+
+    public AudioSource audioSource;
     public GameObject goUsuario;
     public GameObject goGuia;
     public GameObject goWorkshop;
-    public GameObject goLockTool;
-    public GameObject gocandado;
     public GameObject goPosTools;
-
     public GameObject goCircularProgressBar;
+    
     public int i_Step = 0;
     public bool bFinish = false;
-
-    public GameObject obj1;
-    public GameObject obj2;
-    public GameObject obj3;
-    public VideoPlayer videoplayer;
-    private void Awake()
-    {
-        videoplayer.url = System.IO.Path.Combine(Application.streamingAssetsPath, "VideoFacebook.mp4");
-    }
+    
     void Start()
     {
+        tablet_[0].videoplayer.url = System.IO.Path.Combine(Application.streamingAssetsPath, "VideoFacebook.mp4");
+        enum_StepCurrent = enum_StepLT.Welcome;
         StartCoroutine(enumeratorShowTablet());
     }
     public void fNextStep(int istep)
@@ -104,6 +113,19 @@ public class scriptGeneralAct1 : MonoBehaviour
                 StartCoroutine(enumeratorShowTablet());
                 fProcessAyB(3, "");
                 break;
+            case 5: // Etiquetado
+                i_Step = istep;
+                tablet_[0].txtTitle.text = "Etiquetado";
+                tablet_[0].txtInfo.text = "Se ha realizado el bloqueo correctamente ahora el siguiente paso es el etiquetado del equipo";
+                tablet_[0].txtInfo.fontSize = 65;
+                tablet_[0].goCanvasBackpack.SetActive(true);
+                //menuworkshopcontroller.onClicMenu();
+                StartCoroutine(enumeratorShowTablet());
+                break;
+            case 6: // Prueba de energía cero
+                break;
+            case 7: // Bloqueo caja grupal
+                break;
         }
     }
     public void fProcessAyB(int i_op, string s_codetypeTool)
@@ -147,9 +169,15 @@ public class scriptGeneralAct1 : MonoBehaviour
 
                 break;
             case 4:
-                obj1.SetActive(true);
-                obj2.SetActive(true);
-                obj3.SetActive(true);
+                lockouttagout[0].goElements[0].SetActive(true);
+                lockouttagout[0].goElements[1].SetActive(true);
+                lockouttagout[0].goElements[2].SetActive(true);
+                i_Step = 5;
+                menuworkshopcontroller.onClicMenu();
+                StartCoroutine(enumeratorShowTablet());
+                break;
+            case 5:
+                lockouttagout[0].goTagout.SetActive(true);
                 break;
         }
     }
@@ -169,6 +197,7 @@ public class scriptGeneralAct1 : MonoBehaviour
             }
             else
             {
+                bFinish = false;
                 menuworkshopcontroller.onClicMenu();
                 tablet_[0].goCanvasStateAyB.SetActive(true);
             }
@@ -177,8 +206,14 @@ public class scriptGeneralAct1 : MonoBehaviour
         else if(i_Step == 4)
         {
             menuworkshopcontroller.onClicMenu();
-            goLockTool.SetActive(true);
-            gocandado.SetActive(true);
+            goSlotsLockoutTagout[0].SetActive(true);
+            tablet_[0].goCanvasBackpack.SetActive(true);
+        }
+        else if(i_Step == 5)
+        {
+            menuworkshopcontroller.onClicMenu();
+            goSlotsLockoutTagout[1].SetActive(true);
+            fNextStep(5);
         }
         else
         {
@@ -206,7 +241,7 @@ public class scriptGeneralAct1 : MonoBehaviour
         if (i_Step == 0)
         {
             tablet_[0].goButton.SetActive(true);
-            goGuia.transform.GetComponent<sc_Highlighting>().enabled = true;
+            goGuia.transform.GetComponent<sc_Highlighting>().OnTurnOn();
         }
         else if (i_Step == 1)
         {
@@ -223,6 +258,10 @@ public class scriptGeneralAct1 : MonoBehaviour
             tablet_[0].goButton.SetActive(true);
         }
         else if (i_Step == 4)
+        {
+            tablet_[0].goButton.SetActive(true);
+        }
+        else if (i_Step == 5)
         {
             tablet_[0].goButton.SetActive(true);
         }

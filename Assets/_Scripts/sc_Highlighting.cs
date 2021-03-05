@@ -5,25 +5,23 @@ using HighlightingSystem;
 
 public class sc_Highlighting : MonoBehaviour
 {
+    public bool seeThrough = false;
+    protected bool _seeThrough = true;
     protected Highlighter h;
-    public bool seeThrough = true;
-    public bool _seeThrough = true;
-
+    Color col;
     protected void Awake()
     {
-        h = GetComponent<Highlighter>();
+		h = GetComponent<Highlighter>();
         if (h == null)
         {
             h = gameObject.AddComponent<Highlighter>();
         }
     }
-    void Start()
+    private void Start()
     {
-        h.SeeThroughOn();
-        h.ConstantSwitch();
+        col = Color.red;
     }
-
-    public void OnEnable()
+    void OnEnable()
     {
         if (seeThrough)
         {
@@ -34,9 +32,12 @@ public class sc_Highlighting : MonoBehaviour
             h.SeeThroughOff();
         }
     }
-    // Update is called once per frame
-    void Update()
+    public void OnTurnOn()
     {
-        
+        h.ConstantOnImmediate(col);
+    }
+    public void OnTurnOff()
+    {
+        h.Off();
     }
 }

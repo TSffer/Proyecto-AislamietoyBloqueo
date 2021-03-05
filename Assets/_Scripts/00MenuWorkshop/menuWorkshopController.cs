@@ -10,6 +10,7 @@ public class menuWorkshopController : MonoBehaviour
     public GameObject goCanvasDisplay;
     public Text txtMessage;
     bool bFlag = true;
+    bool bFlagbackpack = false;
     public float fVariacionY = 0;
 
     //Lerp
@@ -66,6 +67,21 @@ public class menuWorkshopController : MonoBehaviour
             this.GetComponent<Animator>().SetTrigger("Hide");
         }
     }
+
+    public void onClickMenuObjects(GameObject gameObject)
+    {
+        if (!bFlagbackpack)
+        {
+            bFlagbackpack = true;
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            bFlagbackpack = false;
+            gameObject.SetActive(false);
+        }
+    }
+
     void fMoverObjeto(GameObject goObj, Vector3 _v3AngFinal, float _tDuracion)
     {
         bMoverObj = true;

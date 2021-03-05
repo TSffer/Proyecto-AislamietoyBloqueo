@@ -7,11 +7,13 @@ public class sc_DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 {
     [SerializeField] private Canvas canvas;
     private RectTransform rectTransform;
+    private Vector3 rectTransformOriginal;
     private CanvasGroup canvasGroup;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        rectTransformOriginal = GetComponent<RectTransform>().position;
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
@@ -23,23 +25,25 @@ public class sc_DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += (eventData.delta*50)/canvas.scaleFactor;
+        rectTransform.anchoredPosition += (eventData.delta)/(canvas.scaleFactor*4);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+        rectTransform.position = rectTransformOriginal;
+        Debug.Log("OnEndDrag");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Golas");
+        Debug.Log("OnPointerDown");
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("Golas");
+        Debug.Log("OnDrop");
     }
 }
 
