@@ -5,22 +5,22 @@ using UnityEngine.EventSystems;
 
 public class sc_ItemSlot : MonoBehaviour, IDropHandler
 {
-    public scriptGeneralAct1 scriptgeneralact;
+    public scriptGeneralAct1 scriptgneral;
     public void OnDrop(PointerEventData eventData)
     {
         if(eventData.pointerDrag != null)
         {
-            if(scriptgeneralact.i_Step == 4)
+            if(scriptgneral.enum_StepCurrent == scriptGeneralAct1.enum_StepAyB.Lockout)
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-                Debug.Log("ItemSlot 1");
-                scriptgeneralact.fProcessAyB(4, "");
+                Debug.Log("scriptGeneralAct1.enum_StepAyB.Lockout");
+                scriptgneral.fProcessAyB(1, null);
             }
-            else if(scriptgeneralact.i_Step == 5)
+            else if(scriptgneral.enum_StepCurrent == scriptGeneralAct1.enum_StepAyB.Tagout)
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-                Debug.Log("ItemSlot 2");
-                scriptgeneralact.fProcessAyB(5, "");
+                Debug.Log("scriptGeneralAct1.enum_StepAyB.Tagout");
+                scriptgneral.fProcessAyB(1, null);
             }
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class sc_InspectorController : MonoBehaviour
 {
-    public scriptGeneralAct1 scriptgeneral;
+    public scriptGeneralAct1 scriptgneral;
     public GameObject go_pnlOptions;
     public GameObject go_tgToogles;
     public GameObject go_pnlSuccess;
@@ -19,6 +19,8 @@ public class sc_InspectorController : MonoBehaviour
     public GameObject posUser;
 
     public NavMeshAgent nm;
+    public bool bClick = false;
+
     public void onContinueOptions()
     {
         if(!go_pnlOptions.transform.GetChild(2).GetChild(1).GetComponent<Toggle>().isOn &&
@@ -38,7 +40,6 @@ public class sc_InspectorController : MonoBehaviour
             go_pnlSuccess.SetActive(true);
             go_btnRestart.SetActive(false);
             go_btnContinue.SetActive(true);
-            Debug.Log("Correcto");
             StartCoroutine(fGoStage());
         }
         else
@@ -65,11 +66,12 @@ public class sc_InspectorController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(scriptgeneral.i_Step == 0)
+        if(!bClick)
         {
-            scriptgeneral.fNextStep(1);
+            scriptgneral.fProcessAyB(1, null); 
             nm.SetDestination(transform.position);
             StartCoroutine(foptions());
+            bClick = true;
         }
     }
 
@@ -87,7 +89,7 @@ public class sc_InspectorController : MonoBehaviour
         nm.enabled = false;
         yield return new WaitForSeconds(2);
         fPositionUser(posUser.transform.position, posUser.transform.eulerAngles);
-        scriptgeneral.fNextStep(2);
+        scriptgneral.fProcessAyB(2, null);
     }
 
     private void fPositionUser(Vector3 vPosition, Vector3 vAngles)

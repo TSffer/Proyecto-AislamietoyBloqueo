@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class sc_Collision : MonoBehaviour
 {
-    public scriptGeneralAct1 general;
+    public scriptGeneralAct1 scriptgneral;
     public bool click = false;
     public string s_codetypeTool;
     void OnMouseDown()
     {
         if(!click)
         {
-            general.fProcessAyB(1, s_codetypeTool);
+            scriptgneral.fProcessAyB(1, s_codetypeTool);
             click = true;
         }
     }

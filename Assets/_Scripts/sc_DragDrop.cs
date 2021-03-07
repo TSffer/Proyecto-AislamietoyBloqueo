@@ -19,7 +19,7 @@ public class sc_DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha = 0.6f;
+        canvasGroup.alpha = 0.5f;
         canvasGroup.blocksRaycasts = false;
     }
 
@@ -32,7 +32,7 @@ public class sc_DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        rectTransform.position = rectTransformOriginal;
+        //rectTransform.position = rectTransformOriginal;
         Debug.Log("OnEndDrag");
     }
 
